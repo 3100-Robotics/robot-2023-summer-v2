@@ -78,47 +78,47 @@ public class RobotContainer {
 
     // create the auto commands
     // autos for the left side of the community
-    Command threePieceBalanceLeft = drive.createTrajectory(
-            "3 piece balance clean",
-            constraints);
+//     Command threePieceBalanceLeft = drive.createTrajectory(
+//             "3 piece balance clean",
+//             constraints);
 
-    Command threePieceLeft = drive.createTrajectory(
-            "3 piece clean",
-            constraints);
+//     Command threePieceLeft = drive.createTrajectory(
+//             "3 piece clean",
+//             constraints);
 
-    Command fourPieceLeft = drive.createTrajectory(
-            "4 piece clean", constraints);
+//     Command fourPieceLeft = drive.createTrajectory(
+//             "4 piece clean", constraints);
 
-    Command fivePieceLeft = drive.createTrajectory(
-            "5 piece clean", constraints);
+//     Command fivePieceLeft = drive.createTrajectory(
+//             "5 piece clean", constraints);
 
     // create autos for the right side of the community
 
-    Command threePieceBalanceRight = drive.createTrajectory(
-            "3 piece balance bump", constraints);
+//     Command threePieceBalanceRight = drive.createTrajectory(
+//             "3 piece balance bump", constraints);
 
-    Command threePieceRight = drive.createTrajectory(
-            "3 piece bump", constraints);
+//     Command threePieceRight = drive.createTrajectory(
+//             "3 piece bump", constraints);
 
-    Command fourPieceRight = drive.createTrajectory(
-            "4 piece bump", constraints);
+//     Command fourPieceRight = drive.createTrajectory(
+//             "4 piece bump", constraints);
 
-    Command fivePieceRight = drive.createTrajectory(
-            "5 piece bump", constraints);
+//     Command fivePieceRight = drive.createTrajectory(
+//             "5 piece bump", constraints);
 
     // create autos for the middle of the community
 
-    Command leftTwoPieceCharge = drive.createTrajectory(
-            "left 2 piece charge", constraints);
+//     Command leftTwoPieceCharge = drive.createTrajectory(
+//             "left 2 piece charge", constraints);
 
-    Command rightTwoPieceCharge = drive.createTrajectory(
-            "right 2 piece charge", constraints);
+//     Command rightTwoPieceCharge = drive.createTrajectory(
+//             "right 2 piece charge", constraints);
 
-    Command onePieceCharge = drive.createTrajectory(
-            "1 piece charge", constraints);
+//     Command onePieceCharge = drive.createTrajectory(
+//             "1 piece charge", constraints);
 
-    Command threePieceCharge = drive.createTrajectory(
-            "3 piece balance mid", constraints);
+//     Command threePieceCharge = drive.createTrajectory(
+//             "3 piece balance mid", constraints);
 
     // add them to the auto chooser
     // left side autos
@@ -169,7 +169,7 @@ public class RobotContainer {
     //outreach
     coDriveController.x().onTrue(Collector.collectInplace());
 
-	coDriveController.rightBumper().whileTrue(new followTag(drive, Vision));
+    coDriveController.rightBumper().whileTrue(new followTag(drive, Vision));
 	// coDriveController.leftBumper().whileTrue(Commands.print("running the thing"));
   }
 

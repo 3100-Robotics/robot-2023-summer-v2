@@ -5,8 +5,6 @@ import java.util.function.DoubleSupplier;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -26,7 +24,6 @@ public class collector extends SubsystemBase{
 
     private final CANSparkMax angleMotor;
     private final AbsoluteEncoder angleEncoder;
-    private final SparkMaxPIDController angleController;
 
     private final CANSparkMax shooter1;
     private final CANSparkMax shooter2;
@@ -59,13 +56,6 @@ public class collector extends SubsystemBase{
         PID.setTolerance(1);
 
         // set up the pid controller
-        angleController = angleMotor.getPIDController();
-        // angleController.setP(0);
-        // angleController.setI(0);
-        // angleController.setD(0);
-        // angleController.setFF(0);
-        // angleController.setFeedbackDevice(angleEncoder);
-        // angleController.setSmartMotionAllowedClosedLoopError(1, 0);
 
         // define the zero offset
         angleEncoder.setInverted(true);

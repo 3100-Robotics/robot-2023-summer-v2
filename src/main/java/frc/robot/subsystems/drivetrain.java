@@ -114,9 +114,9 @@ public class drivetrain extends SubsystemBase{
 
     public Command driveWithJoysticks(DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotation, BooleanSupplier FieldRelative) {
         return this.run(() -> drive.drive(new Translation2d(
-            -MathUtil.applyDeadband(vX.getAsDouble(), 0.04) * drive.getSwerveController().config.maxSpeed,
-            -MathUtil.applyDeadband(vY.getAsDouble(), 0.04)* drive.getSwerveController().config.maxSpeed),
-            -MathUtil.applyDeadband(rotation.getAsDouble(), 0.09) * drive.getSwerveController().config.maxAngularVelocity,
+            -MathUtil.applyDeadband(Math.pow(vX.getAsDouble(), 3), 0.04)*drive.getSwerveController().config.maxSpeed,
+            -MathUtil.applyDeadband(Math.pow(vY.getAsDouble(), 3), 0.04)*drive.getSwerveController().config.maxSpeed),
+            -MathUtil.applyDeadband(Math.pow(rotation.getAsDouble(), 3), 0.09) * drive.getSwerveController().config.maxAngularVelocity,
             FieldRelative.getAsBoolean(), false));
     }
 
