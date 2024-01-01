@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.vision;
 import frc.robot.Constants.driveConstants;
 import swervelib.SwerveDrive;
+import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 
@@ -60,7 +62,12 @@ public class drivetrain extends SubsystemBase{
 
         // create the drivetrain from the config files
         try {
-            drive = new SwerveParser(swerveJsonDir).createSwerveDrive();
+            double DriveConversionFactor = SwerveMath.calculateMetersPerRotation(
+                Units.inchesToMeters(driveConstants.WHEEL_DIAMETER), 
+                driveConstants.DRIVE_GEAR_RATIO, 
+                driveConstants.DRIVE_ENCODER_RESOLUTION);
+            double SteeringConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(driveConstants.STEERING_GEAR_RATIO, driveConstants.STEERING_ENCODER_RESOLUTION);
+            drive = new SwerveParser(swerveJsonDir).createSwerveDrive(driveConstants.maxSpeed, SteeringConversionFactor, DriveConversionFactor);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +88,7 @@ public class drivetrain extends SubsystemBase{
 			EstimatedRobotPose camPose = frontResult.get();
 			drive.addVisionMeasurement(
                 camPose.estimatedPose.toPose2d(),
-                camPose.timestampSeconds, false, 1);
+                camPose.timestampSeconds);
 		}
         
         Optional<EstimatedRobotPose> backResult = Vision.getFrontPose(drive.getPose());
@@ -89,7 +96,7 @@ public class drivetrain extends SubsystemBase{
 			EstimatedRobotPose camPose = backResult.get();
 			drive.addVisionMeasurement(
                 camPose.estimatedPose.toPose2d(),
-                camPose.timestampSeconds, true, 1);
+                camPose.timestampSeconds);
 		}
     }
 
@@ -115,8 +122,8 @@ public class drivetrain extends SubsystemBase{
 
     public Command driveWithJoysticks(DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier rotation, BooleanSupplier FieldRelative) {
         return this.run(() -> drive.drive(new Translation2d(
-            -MathUtil.applyDeadband(Math.pow(vX.getAsDouble(), 3), 0.04)*drive.getSwerveController().config.maxSpeed,
-            -MathUtil.applyDeadband(Math.pow(vY.getAsDouble(), 3), 0.04)*drive.getSwerveController().config.maxSpeed),
+            -MathUtil.applyDeadband(Math.pow(vX.getAsDouble(), 3), 0.04)*driveConstants.maxSpeed,
+            -MathUtil.applyDeadband(Math.pow(vY.getAsDouble(), 3), 0.04)*driveConstants.maxSpeed),
             -MathUtil.applyDeadband(Math.pow(rotation.getAsDouble(), 3), 0.09) * drive.getSwerveController().config.maxAngularVelocity,
             FieldRelative.getAsBoolean(), false));
     }

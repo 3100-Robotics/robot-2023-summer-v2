@@ -20,6 +20,14 @@ public class Constants {
   
       // loop time to use
       public static final double LOOP_TIME = 0.13;
+      public static final double maxSpeed = 10;
+
+      public static final double WHEEL_DIAMETER = 3; //TODO: measure better wheel diameter
+      public static final double DRIVE_GEAR_RATIO = 4.714285714285714;
+      public static final double DRIVE_ENCODER_RESOLUTION = 1;
+
+      public static final double STEERING_GEAR_RATIO = 1;
+      public static final double STEERING_ENCODER_RESOLUTION = 1;
   }
 
   public static class collectorConstants {
